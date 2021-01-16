@@ -7,5 +7,6 @@
     "allowJs": true,
     "strict": true,
     "moduleResolution": "node"
-  }
+  },
+  "include": ["web/**/*"]
 }

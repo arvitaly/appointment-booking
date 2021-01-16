@@ -13,7 +13,11 @@ import Footer from "./Footer";
 import { createAppointment } from "./api";
 import BookingResult from "./BookingResult";
 
-export interface IAppState {
+export interface IAppProps {
+  data: IDtoPageData;
+}
+
+interface IAppState {
   bookingVisible: boolean;
   bookingLoading: boolean;
   bookingError: string | null;
@@ -71,7 +75,7 @@ export function AppReducer(state: IAppState, action: AppAction): IAppState {
   }
 }
 
-export default function App({ data }: { data: IDtoPageData }) {
+export default function App({ data }: IAppProps) {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   // BookingForm ref
