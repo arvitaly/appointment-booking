@@ -1,0 +1,10 @@
+[
+  {
+    "id": 234,
+    "first_name": "Andrew",
+    "last_name": "Morgant",
+    "email": "andrew@gmail.com",
+    "specialty": "Public Health Professional",
+    "profile_picture": "http://127.0.0.1:8000/andrew.png"
+  }
+]

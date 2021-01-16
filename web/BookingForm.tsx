@@ -80,6 +80,7 @@ export default function BookingForm({
 }: IBookingFormProps) {
   return (
     <Form
+      className="booking_form"
       form={form}
       labelCol={layout.labelCol}
       wrapperCol={layout.wrapperCol}

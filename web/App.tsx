@@ -135,6 +135,7 @@ export default function App({ data }: IAppProps) {
             Return
           </Button>,
           <Button
+            className="booking_submit_button"
             key="submit"
             type="primary"
             loading={state.bookingLoading}
