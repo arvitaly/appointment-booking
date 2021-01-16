@@ -4,12 +4,15 @@ import Select from "antd/lib/select";
 import DatePicker from "antd/lib/date-picker";
 import TimePicker from "antd/lib/time-picker";
 import Input from "antd/lib/input";
+import Col from "antd/lib/col";
+import Row from "antd/lib/row";
 
 import { FormInstance, Rule } from "antd/lib/form";
 import {
   getDisabledDaysBeforeCurrent,
   getDisabledHoursByWorkTime,
 } from "./util/datetime";
+
 const { Option } = Select;
 
 //Props
@@ -29,13 +32,14 @@ export interface IBookingFormProps {
 }
 // Form
 export interface IBookingFormValues {
+  firstName: string;
+  lastName: string;
+  gender: "Male" | "Female";
+  email: string;
   examRoomIndex: number;
   scheduledDate: moment.Moment;
   scheduledTime: moment.Moment;
   duration: number;
-  firstName: string;
-  gender: "Male" | "Female";
-  lastName: string;
 }
 // Form styles
 const layout = {
@@ -53,6 +57,9 @@ const BookingFormRules: {
   ],
   lastName: [
     { required: true, min: 2, message: "Please enter your last name!" },
+  ],
+  email: [
+    { required: true, type: "email", message: "Please enter your email!" },
   ],
   gender: [{ required: true, message: "Please set your gender!" }],
   examRoomIndex: [{ required: true, message: "Please select an exam room!" }],
@@ -80,79 +87,92 @@ export default function BookingForm(props: IBookingFormProps) {
       }}
       onFinish={props.onFinish}
     >
-      <Form.Item label="Office">
-        {props.office.name + ", " + props.office.address}
-      </Form.Item>
-      <Form.Item
-        label="First name"
-        name="firstName"
-        rules={BookingFormRules.firstName}
-      >
-        <Input type="text" placeholder="First name" />
-      </Form.Item>
-      <Form.Item
-        label="Last name"
-        name="lastName"
-        rules={BookingFormRules.lastName}
-      >
-        <Input type="text" placeholder="Last name" />
-      </Form.Item>
-      <Form.Item name="gender" label="Gender" rules={BookingFormRules.gender}>
-        <Select>
-          <Option value={"Female"}>Female</Option>
-          <Option value={"Male"}>Male</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item
-        name="examRoomIndex"
-        label="Exam room"
-        rules={BookingFormRules.examRoomIndex}
-      >
-        <Select placeholder="Select exam room">
-          {props.examRooms.map((room) => (
-            <Option key={room.index} value={room.index}>
-              {room.name}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
-      <Form.Item
-        name="scheduledDate"
-        rules={BookingFormRules.scheduledDate}
-        label="Date"
-      >
-        <DatePicker
-          disabledDate={getDisabledDaysBeforeCurrent}
-          format={PICKER_DATE_FORMAT}
-        />
-      </Form.Item>
-      <Form.Item
-        name="scheduledTime"
-        rules={BookingFormRules.scheduledTime}
-        label="Time"
-      >
-        <TimePicker
-          format={PICKER_TIME_FORMAT}
-          disabledHours={() =>
-            getDisabledHoursByWorkTime(
-              props.office.startTime,
-              props.office.endTime
-            )
-          }
-        />
-      </Form.Item>
-      <Form.Item
-        name="duration"
-        rules={BookingFormRules.duration}
-        label="Duration"
-      >
-        <Select>
-          <Option value={30}>30 minutes</Option>
-          <Option value={60}>1 hour</Option>
-          <Option value={90}>1 hour 30 minutes</Option>
-          <Option value={120}>2 hours</Option>
-        </Select>
-      </Form.Item>
+      <Row>
+        <Col span={12}>
+          <Form.Item
+            label="First name"
+            name="firstName"
+            rules={BookingFormRules.firstName}
+          >
+            <Input type="text" placeholder="First name" />
+          </Form.Item>
+          <Form.Item
+            label="Last name"
+            name="lastName"
+            rules={BookingFormRules.lastName}
+          >
+            <Input type="text" placeholder="Last name" />
+          </Form.Item>
+          <Form.Item label="Email" name="email" rules={BookingFormRules.email}>
+            <Input type="text" placeholder="Email" />
+          </Form.Item>
+          <Form.Item
+            name="gender"
+            label="Gender"
+            rules={BookingFormRules.gender}
+          >
+            <Select>
+              <Option value={"Female"}>Female</Option>
+              <Option value={"Male"}>Male</Option>
+            </Select>
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item label="Office">
+            {props.office.name + ", " + props.office.address}
+          </Form.Item>
+          <Form.Item
+            name="examRoomIndex"
+            label="Exam room"
+            rules={BookingFormRules.examRoomIndex}
+          >
+            <Select placeholder="Select exam room">
+              {props.examRooms.map((room) => (
+                <Option key={room.index} value={room.index}>
+                  {room.name}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name="scheduledDate"
+            rules={BookingFormRules.scheduledDate}
+            label="Date"
+          >
+            <DatePicker
+              disabledDate={getDisabledDaysBeforeCurrent}
+              format={PICKER_DATE_FORMAT}
+            />
+          </Form.Item>
+          <Form.Item
+            name="scheduledTime"
+            rules={BookingFormRules.scheduledTime}
+            label="Time"
+          >
+            <TimePicker
+              format={PICKER_TIME_FORMAT}
+              disabledHours={() =>
+                getDisabledHoursByWorkTime(
+                  props.office.startTime,
+                  props.office.endTime
+                )
+              }
+            />
+          </Form.Item>
+          <Form.Item
+            name="duration"
+            rules={BookingFormRules.duration}
+            label="Duration"
+          >
+            <Select>
+              <Option value={30}>30 minutes</Option>
+              <Option value={60}>1 hour</Option>
+              <Option value={90}>1 hour 30 minutes</Option>
+              <Option value={120}>2 hours</Option>
+            </Select>
+          </Form.Item>
+        </Col>
+      </Row>
     </Form>
   );
 }

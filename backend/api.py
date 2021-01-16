@@ -11,6 +11,7 @@ create_appointment_schema = {
     "properties": {
         "firstName": {"type": "string", "minLength": 2, },
         "lastName": {"type": "string", "minLength": 2, },
+        "email": {"type": "string", "minLength": 2, format: "email"},
         "gender": {"type": "string"},
         "duration": {"type": "number", "minimum": 1},
         "scheduledTimestamp": {"type": "number", "minimum": 946656000000, "maximum": 3155731200000},
@@ -35,6 +36,7 @@ def api_create_appointment():
     patient = create_patient({
         "first_name": data["firstName"],
         "last_name": data["lastName"],
+        "email": data["email"],
         "doctor": Config.drchrono_doctor_id,
         "gender": data["gender"],
     })

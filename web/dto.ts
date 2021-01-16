@@ -21,10 +21,11 @@ export interface IDtoPageData {
 }
 
 export interface IDtoCreateAppointment {
-  examRoomIndex: number;
   firstName: string;
   lastName: string;
   gender: "Female" | "Male";
+  examRoomIndex: number;
+  email: string;
   duration: number;
   scheduledTimestamp: number;
 }

@@ -120,6 +120,7 @@ export default function App({ data }: { data: IDtoPageData }) {
       />
       <Footer />
       <Modal
+        style={{ minWidth: "700px" }}
         visible={state.bookingVisible}
         title="Appointment Booking"
         onOk={handleOk}

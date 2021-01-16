@@ -14,6 +14,7 @@ export async function createAppointment(
     examRoomIndex: values.examRoomIndex,
     firstName: values.firstName,
     lastName: values.lastName,
+    email: values.email,
     gender: values.gender,
     duration: values.duration,
     scheduledTimestamp: new Date(
