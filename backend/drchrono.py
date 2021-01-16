@@ -2,8 +2,10 @@ from backend.Config import Config
 from urllib.parse import urlencode
 import requests
 
+
 class NonUniqueError(Exception):
     pass
+
 
 def do_post_request(path, params={}):
     headers = {

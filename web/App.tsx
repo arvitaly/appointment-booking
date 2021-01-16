@@ -84,6 +84,11 @@ export default function App({ data }: IAppProps) {
     bookingForm.submit();
   };
 
+  const onBookingError = (error: string) => {
+    message.error(error.toString());
+    dispatch({ type: "BOOKING_ERROR", error });
+  };
+
   const onFinish = (values: IBookingFormValues) => {
     dispatch({ type: "BOOKING_LOADING" });
     createAppointment(values, {
@@ -99,10 +104,6 @@ export default function App({ data }: IAppProps) {
   const handleCancel = () => dispatch({ type: "BOOKING_HIDE" });
   const showBooking = () => dispatch({ type: "BOOKING_SHOW" });
 
-  const onBookingError = (error: string) => {
-    message.error(error.toString());
-    dispatch({ type: "BOOKING_ERROR", error });
-  };
   const handleResultOk = () => {
     dispatch({ type: "BOOKING_RESULT_HIDE" });
   };

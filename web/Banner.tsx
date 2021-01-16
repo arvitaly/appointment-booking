@@ -15,17 +15,13 @@ export default function Banner({
       >
         <div className="banner__header">BECAUSE WE CARE</div>
         <div className="banner__subheader">EMERGENCY CALL {officePhone}</div>
-        <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            onButtonClick();
-          }}
+        <button
+          type="button"
+          onClick={onButtonClick}
           className="banner__button"
         >
-          {" "}
-          Make an Apppointment{" "}
-        </a>
+          Make an Apppointment
+        </button>
       </div>
     </div>
   );

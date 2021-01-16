@@ -1,13 +1,11 @@
 import moment from "moment";
-import Form from "antd/lib/form";
+import Form, { FormInstance, Rule } from "antd/lib/form";
 import Select from "antd/lib/select";
 import DatePicker from "antd/lib/date-picker";
 import TimePicker from "antd/lib/time-picker";
 import Input from "antd/lib/input";
 import Col from "antd/lib/col";
 import Row from "antd/lib/row";
-
-import { FormInstance, Rule } from "antd/lib/form";
 import {
   getDisabledDaysBeforeCurrent,
   getDisabledHoursByWorkTime,
@@ -15,7 +13,6 @@ import {
 
 const { Option } = Select;
 
-//Props
 export interface IBookingFormProps {
   office: {
     name: string;
@@ -75,17 +72,23 @@ export function getDefaultPickerDate(): moment.Moment {
 }
 // API helpers
 // Component
-export default function BookingForm(props: IBookingFormProps) {
+export default function BookingForm({
+  examRooms,
+  form,
+  office,
+  onFinish,
+}: IBookingFormProps) {
   return (
     <Form
-      form={props.form}
-      {...layout}
+      form={form}
+      labelCol={layout.labelCol}
+      wrapperCol={layout.wrapperCol}
       initialValues={{
         scheduledTime: getDefaultPickerTime(),
         scheduledDate: getDefaultPickerDate(),
         duration: 60,
       }}
-      onFinish={props.onFinish}
+      onFinish={onFinish}
     >
       <Row>
         <Col span={12}>
@@ -112,14 +115,14 @@ export default function BookingForm(props: IBookingFormProps) {
             rules={BookingFormRules.gender}
           >
             <Select>
-              <Option value={"Female"}>Female</Option>
-              <Option value={"Male"}>Male</Option>
+              <Option value="Female">Female</Option>
+              <Option value="Male">Male</Option>
             </Select>
           </Form.Item>
         </Col>
         <Col span={12}>
           <Form.Item label="Office">
-            {props.office.name + ", " + props.office.address}
+            {`${office.name}, ${office.address}`}
           </Form.Item>
           <Form.Item
             name="examRoomIndex"
@@ -127,7 +130,7 @@ export default function BookingForm(props: IBookingFormProps) {
             rules={BookingFormRules.examRoomIndex}
           >
             <Select placeholder="Select exam room">
-              {props.examRooms.map((room) => (
+              {examRooms.map((room) => (
                 <Option key={room.index} value={room.index}>
                   {room.name}
                 </Option>
@@ -152,10 +155,7 @@ export default function BookingForm(props: IBookingFormProps) {
             <TimePicker
               format={PICKER_TIME_FORMAT}
               disabledHours={() =>
-                getDisabledHoursByWorkTime(
-                  props.office.startTime,
-                  props.office.endTime
-                )
+                getDisabledHoursByWorkTime(office.startTime, office.endTime)
               }
             />
           </Form.Item>

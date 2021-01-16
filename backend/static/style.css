@@ -72,16 +72,15 @@ ul {
   background-color: gray;
 }
 .footer__content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
+  text-align: center;
+  padding-top: 30px;
+  height: 70px;
   color: white;
   gap: 10px;
 }
 .footer__content a {
   color: white;
-  text-decoration: none;
+  text-decoration: underline;
 }
 /* Banner */
 .banner {

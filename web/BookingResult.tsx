@@ -10,17 +10,17 @@ export interface IBookingResultProps {
     lastName: string;
   };
 }
-export default function BookingResult(props: IBookingResultProps) {
-  const dt = new Date(props.appointment.scheduledDateTime);
-  const scheduledDateTime =
-    dt.toLocaleDateString() + " " + dt.toLocaleTimeString();
+export default function BookingResult({
+  appointment,
+  patient,
+}: IBookingResultProps) {
+  const dt = new Date(appointment.scheduledDateTime);
+  const scheduledDateTime = `${dt.toLocaleDateString()} ${dt.toLocaleTimeString()}`;
   return (
     <Result
       status="success"
-      title={`Thank you for booking, ${
-        props.patient.firstName + " " + props.patient.lastName
-      }!`}
-      subTitle={`Booking number:  ${props.appointment.id} Datetime: ${scheduledDateTime}`}
+      title={`Thank you for booking, ${`${patient.firstName} ${patient.lastName}`}!`}
+      subTitle={`Booking number:  ${appointment.id} Datetime: ${scheduledDateTime}`}
     />
   );
 }

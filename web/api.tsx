@@ -24,11 +24,11 @@ export async function createAppointment(
       )
     ).getTime(),
   };
-  const response = await fetch(apiConfig.baseUrl + `/appointments`, {
+  const response = await fetch(`${apiConfig.baseUrl}/appointments`, {
     body: JSON.stringify(data),
     method: "POST",
     headers: {
-      Authorization: "Bearer " + apiConfig.accessToken,
+      Authorization: `Bearer ${apiConfig.accessToken}`,
       "Content-Type": "application/json",
     },
   });
