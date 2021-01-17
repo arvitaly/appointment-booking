@@ -15,11 +15,13 @@ jobs:
       - name: Use Node.js ${{ matrix.node_version }}
         uses: actions/setup-node@v1
         with:
-          python: 
+          python: 3.7
           node_version: ${{ matrix.node_version }}
 
       - name: run CI
         run: |
-          bin/pip install -r requirements.txt
+          python3 -m venv .
+          source bin/activate
+          pip install -r requirements.txt
           npm install
           npm run test
