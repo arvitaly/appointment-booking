@@ -1,4 +1,5 @@
 import Result from "antd/lib/result";
+import { formatTimestampToLocaleString } from "./util/datetime";
 
 export interface IBookingResultProps {
   appointment: {
@@ -14,8 +15,9 @@ export default function BookingResult({
   appointment,
   patient,
 }: IBookingResultProps) {
-  const dt = new Date(appointment.scheduledDateTime);
-  const scheduledDateTime = `${dt.toLocaleDateString()} ${dt.toLocaleTimeString()}`;
+  const scheduledDateTime = formatTimestampToLocaleString(
+    appointment.scheduledDateTime
+  );
   return (
     <Result
       status="success"

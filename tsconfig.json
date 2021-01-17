@@ -8,5 +8,5 @@
     "strict": true,
     "moduleResolution": "node"
   },
-  "include": ["web/**/*", "tests/**/*"]
+  "include": ["web/**/*", "__tests__/**/*", "testutil.ts"]
 }

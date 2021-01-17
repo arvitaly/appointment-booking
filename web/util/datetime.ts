@@ -24,3 +24,8 @@ export function getDisabledHoursByWorkTime(startTime: string, endTime: string) {
 export function getDisabledDaysBeforeCurrent(current: moment.Moment) {
   return current && current < moment().add(1, "days").endOf("day");
 }
+
+export function formatTimestampToLocaleString(input: number) {
+  const dt = new Date(input);
+  return `${dt.toLocaleDateString()} ${dt.toLocaleTimeString()}`;
+}
