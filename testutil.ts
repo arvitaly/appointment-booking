@@ -91,7 +91,12 @@ export async function runFlaskProccess({
       command,
       {
         cwd: `${__dirname}`,
-        env: { ...env, FLASK_ENV: "development" },
+        env: {
+          ...env,
+          FLASK_ENV: "development",
+          LC_ALL: "C.UTF-8",
+          LANG: "C.UTF-8",
+        },
       },
       (err, stdout, stderr) => {
         if (isClosed) {
