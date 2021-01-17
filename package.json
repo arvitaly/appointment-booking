@@ -9,7 +9,7 @@
   "scripts": {
     "webdev": "webpack serve --mode=development",
     "build": "webpack --mode=production",
-    "test": "npm run build && tsc --noEmit && eslint -c .eslintrc.js --env browser --ext .ts --ext .tsx ./web && jest"
+    "test": "npm run build && tsc --noEmit && eslint -c .eslintrc.js --env browser --ext .ts --ext .tsx ./web && jest --forceExit --verbose --detectOpenHandles"
   },
   "repository": {
     "type": "git",
