@@ -1,6 +1,6 @@
 # Appointment Booking Test
 
-![CI workflow](https://github.com/arvitaly/appointment-booking/workflows/ci/badge.svg)
+![CI workflow](https://github.com/arvitaly/appointment-booking/workflows/CI/badge.svg)
 
 An application for making an appointment with Drchrono based on Flask and React. Flask is used for backend (views and api). React + Antd is used for frontend-logic and UI.
 

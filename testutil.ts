@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Page } from "puppeteer";
+import { ChildProcess, exec } from "child_process";
 
 export async function sleep(timeout: number) {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -71,4 +72,40 @@ export async function isElementVisible(page: Page, selector: string) {
     throw new Error(`Not found element with selector ${selector}`);
   }
   return element.isIntersectingViewport();
+}
+
+export interface IFlaskTestProcess {
+  close: () => Promise<void>;
+}
+
+export async function runFlaskProccess({
+  env,
+}: {
+  env: NodeJS.ProcessEnv;
+}): Promise<IFlaskTestProcess> {
+  const command = `bin/python3 -m flask run`;
+  const proc = exec(command, {
+    cwd: `${__dirname}`,
+    env: { ...env, FLASK_ENV: "development" },
+  });
+  await new Promise<void>((resolve, reject) => {
+    const onError = (err: Error) => reject(err);
+    const onData = (chunk: string) => {
+      if (chunk.indexOf(`* Debug mode: on`) > -1) {
+        proc.stdout?.off(`error`, onError);
+        proc.stdout?.off(`data`, onData);
+        resolve();
+      }
+    };
+    proc.stdout?.on(`data`, onData);
+    proc.stdout?.once(`error`, onError);
+  });
+  await sleep(500);
+
+  return {
+    close: async () => {
+      proc.kill("SIGTERM");
+      await sleep(500);
+    },
+  };
 }

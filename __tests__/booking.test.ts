@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { ChildProcess, exec } from "child_process";
 import { Page } from "puppeteer";
 import {
   antdInputTime,
@@ -8,6 +7,8 @@ import {
   getElementText,
   isElementVisible,
   sleep,
+  IFlaskTestProcess,
+  runFlaskProccess,
 } from "../testutil";
 
 jest.setTimeout(10000);
@@ -45,12 +46,11 @@ const APPOINTMENT_NEXT_ID = 54656345;
 
 declare let page: Page;
 describe("Google", () => {
-  let appProc: ChildProcess;
-  let mockProc: ChildProcess;
+  let appProc: IFlaskTestProcess;
+  let mockProc: IFlaskTestProcess;
 
   beforeAll(async () => {
-    appProc = exec(`bin/python3 -m flask run`, {
-      cwd: `${__dirname}/..`,
+    appProc = await runFlaskProccess({
       env: {
         FLASK_APP: "drchrono_mock",
         FLASK_RUN_PORT: "7030",
@@ -58,8 +58,7 @@ describe("Google", () => {
         APPOINTMENT_NEXT_ID: APPOINTMENT_NEXT_ID.toString(),
       },
     });
-    mockProc = exec(`bin/python3 -m flask run`, {
-      cwd: `${__dirname}/..`,
+    mockProc = await runFlaskProccess({
       env: {
         FLASK_APP: "backend",
         FLASK_RUN_PORT: "7040",
@@ -68,7 +67,7 @@ describe("Google", () => {
         DRCHRONO_OFFICE_ID: office.id,
       },
     });
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    await sleep(500);
   });
 
   beforeEach(async () => {
@@ -143,8 +142,8 @@ describe("Google", () => {
     expect(true).toBe(true);
   });
 
-  afterAll(() => {
-    appProc.kill("SIGTERM");
-    mockProc.kill("SIGTERM");
+  afterAll(async () => {
+    await appProc.close();
+    await mockProc.close();
   });
 });
