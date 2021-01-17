@@ -20,7 +20,9 @@ jobs:
 
       - name: run CI
         run: |
-          python3 -m venv .
+          export LC_ALL=en_US.utf-8
+          export LANG=en_US.utf-8
+          python3.7 -m venv .
           source bin/activate
           pip install -r requirements.txt
           npm install
