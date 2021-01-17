@@ -84,30 +84,45 @@ export async function runFlaskProccess({
   env: NodeJS.ProcessEnv;
 }): Promise<IFlaskTestProcess> {
   const command = `bin/python3 -m flask run`;
-  const proc = exec(command, {
-    cwd: `${__dirname}`,
-    env: { ...env, FLASK_ENV: "development" },
-  });
+  let proc: ChildProcess;
+  let isClosed = false;
   await new Promise<void>((resolve, reject) => {
-    const onClose = () => reject(new Error(`Unexpected close`));
+    proc = exec(
+      command,
+      {
+        cwd: `${__dirname}`,
+        env: { ...env, FLASK_ENV: "development" },
+      },
+      (err, stdout, stderr) => {
+        if (isClosed) {
+          return;
+        }
+        if (err) {
+          reject(err);
+        } else {
+          reject(
+            new Error(`Unexpected close, stdout: ${stdout}, stderr: ${stderr}`)
+          );
+        }
+      }
+    );
     const onError = (err: Error) => reject(err);
     const onData = (chunk: string) => {
       process.stdout.write(chunk);
       if (chunk.indexOf(`* Debug mode: on`) > -1) {
         proc.stdout?.off(`error`, onError);
         proc.stdout?.off(`data`, onData);
-        proc.stdout?.off(`data`, onClose);
         resolve();
       }
     };
     proc.stdout?.on(`data`, onData);
     proc.stdout?.once(`error`, onError);
-    proc.stdout?.once(`close`, onClose);
   });
   await sleep(500);
 
   return {
     close: async () => {
+      isClosed = true;
       proc.kill("SIGTERM");
       await sleep(500);
     },
