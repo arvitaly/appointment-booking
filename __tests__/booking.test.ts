@@ -11,7 +11,7 @@ import {
   runFlaskProccess,
 } from "../testutil";
 
-jest.setTimeout(20000);
+jest.setTimeout(10000);
 
 const doctor = require("../__fixtures__/drchrono/doctors.json")[0];
 const office = require("../__fixtures__/drchrono/offices.json")[0];
@@ -95,7 +95,6 @@ describe("Google", () => {
   });
 
   it("when submit the right values should create appointment and show result window", async () => {
-    jest.setTimeout(10000000);
     await page.click(`.banner__button`);
     await page.type(`#firstName`, patient.firstName);
     await page.type(`#lastName`, patient.lastName);

@@ -84,10 +84,10 @@ export async function runFlaskProccess({
   env: NodeJS.ProcessEnv;
 }): Promise<IFlaskTestProcess> {
   const command = `bin/python3 -m flask run`;
-  let proc: ChildProcess;
+
   let isClosed = false;
-  await new Promise<void>((resolve, reject) => {
-    proc = exec(
+  const childProccess = await new Promise<ChildProcess>((resolve, reject) => {
+    const proc = exec(
       command,
       {
         cwd: `${__dirname}`,
@@ -117,7 +117,7 @@ export async function runFlaskProccess({
       if (chunk.indexOf(`* Debug mode: on`) > -1) {
         proc.stdout?.off(`error`, onError);
         proc.stdout?.off(`data`, onData);
-        resolve();
+        resolve(proc);
       }
     };
     proc.stdout?.on(`data`, onData);
@@ -125,10 +125,16 @@ export async function runFlaskProccess({
   });
   await sleep(500);
 
+  childProccess.stdout?.on(`data`, (chunk: string) => {
+    process.stdout.write(chunk);
+  });
+  childProccess.stderr?.on(`data`, (chunk: string) => {
+    process.stderr.write(chunk);
+  });
   return {
     close: async () => {
       isClosed = true;
-      proc.kill("SIGTERM");
+      childProccess.kill("SIGTERM");
       await sleep(500);
     },
   };
