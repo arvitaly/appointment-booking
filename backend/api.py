@@ -49,6 +49,7 @@ def api_create_appointment():
             "office": Config.drchrono_office_id,
             "scheduled_time": scheduled_iso_date_time,
             "duration": data["duration"],
+            "reason": data["reason"]
         })
 
         return jsonify({

@@ -6,6 +6,7 @@ import TimePicker from "antd/lib/time-picker";
 import Input from "antd/lib/input";
 import Col from "antd/lib/col";
 import Row from "antd/lib/row";
+import TextArea from "antd/lib/input/TextArea";
 import {
   getDisabledDaysBeforeCurrent,
   getDisabledHoursByWorkTime,
@@ -37,6 +38,7 @@ export interface IBookingFormValues {
   scheduledDate: moment.Moment;
   scheduledTime: moment.Moment;
   duration: number;
+  reason: string;
 }
 // Form styles
 const layout = {
@@ -58,7 +60,8 @@ const BookingFormRules: {
   email: [
     { required: true, type: "email", message: "Please enter your email!" },
   ],
-  gender: [{ required: true, message: "Please set your gender!" }],
+  gender: [{ required: true, message: "Please select your gender!" }],
+  reason: [{ required: true, message: "Please input your reason!" }],
   examRoomIndex: [{ required: true, message: "Please select an exam room!" }],
   scheduledDate: [{ required: true }],
   scheduledTime: [{ required: true }],
@@ -119,6 +122,13 @@ export default function BookingForm({
               <Option value="Female">Female</Option>
               <Option value="Male">Male</Option>
             </Select>
+          </Form.Item>
+          <Form.Item
+            label="Reason"
+            name="reason"
+            rules={BookingFormRules.reason}
+          >
+            <TextArea />
           </Form.Item>
         </Col>
         <Col span={12}>

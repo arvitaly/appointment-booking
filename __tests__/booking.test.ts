@@ -39,6 +39,9 @@ const appointment = {
     timestamp: new Date("2021-08-15T12:47:00"),
     value: `12:47`,
   },
+  reason: {
+    value: `I'm hurt`,
+  },
 };
 
 const PATIENT_NEXT_ID = 874893;
@@ -102,6 +105,7 @@ describe("Google", () => {
     await page.type(`#lastName`, patient.lastName);
     await page.type(`#email`, patient.email);
     await antdSelect(page, `gender`, patient.gender);
+    await page.type(`#reason`, appointment.reason.value.toString());
     await antdSelect(
       page,
       `examRoomIndex`,

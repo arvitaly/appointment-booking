@@ -28,6 +28,7 @@ export interface IDtoCreateAppointment {
   email: string;
   duration: number;
   scheduledTimestamp: number;
+  reason: string;
 }
 
 export interface IDtoCreatedAppointment {

@@ -17,6 +17,7 @@ export async function createAppointment(
     email: values.email,
     gender: values.gender,
     duration: values.duration,
+    reason: values.reason,
     scheduledTimestamp: new Date(
       joinMomentDateAndTimeToUtcString(
         values.scheduledDate,
