@@ -11,7 +11,7 @@ import {
   runFlaskProccess,
 } from "../testutil";
 
-jest.setTimeout(10000);
+jest.setTimeout(20000);
 
 const doctor = require("../__fixtures__/drchrono/doctors.json")[0];
 const office = require("../__fixtures__/drchrono/offices.json")[0];
