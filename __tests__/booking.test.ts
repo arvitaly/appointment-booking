@@ -49,7 +49,7 @@ const APPOINTMENT_NEXT_ID = 54656345;
 const DRCHRONO_ACCESS_TOKEN = `D_ACCESS_TOKEN_3432423`;
 
 declare let page: Page;
-describe("Google", () => {
+describe("Booking tests", () => {
   let appProc: IFlaskTestProcess;
   let mockProc: IFlaskTestProcess;
 
