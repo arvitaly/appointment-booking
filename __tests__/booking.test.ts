@@ -43,6 +43,7 @@ const appointment = {
 
 const PATIENT_NEXT_ID = 874893;
 const APPOINTMENT_NEXT_ID = 54656345;
+const DRCHRONO_ACCESS_TOKEN = `D_ACCESS_TOKEN_3432423`;
 
 declare let page: Page;
 describe("Google", () => {
@@ -65,6 +66,7 @@ describe("Google", () => {
         DRCHRONO_BASE_URL: `http://127.0.0.1:7030`,
         DRCHRONO_DOCTOR_ID: doctor.id,
         DRCHRONO_OFFICE_ID: office.id,
+        DRCHRONO_ACCESS_TOKEN,
       },
     });
     await sleep(500);
