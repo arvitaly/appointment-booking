@@ -91,6 +91,7 @@ export async function runFlaskProccess({
   await new Promise<void>((resolve, reject) => {
     const onError = (err: Error) => reject(err);
     const onData = (chunk: string) => {
+      process.stdout.write(chunk);
       if (chunk.indexOf(`* Debug mode: on`) > -1) {
         proc.stdout?.off(`error`, onError);
         proc.stdout?.off(`data`, onData);
